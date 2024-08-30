@@ -20,3 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//====Admin Dashboard====
+
+Route::get('/adminDashboard', function () {
+   return view('AdminDashboard/index');
+});
+
+//====Admin Dashboard - Layouts====
+Route::get('/AdminDashboard/layouts/head', function () {
+    return view('AdminDashboard/layouts/head');
+});
