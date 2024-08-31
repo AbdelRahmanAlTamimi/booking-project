@@ -23,6 +23,13 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
 });
+Route::get('/', function () {
+    return view('index');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Routes (with Middleware Protection)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
