@@ -14,16 +14,14 @@ use App\Http\Controllers\TestimonialController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/about', function () {
-    return view('about');
-});
+// Route::get('/about', function () {
+//     return view('about');
+// });
 
 Route::get('/app', function () {
     return view('layouts.app');
@@ -33,12 +31,5 @@ Route::get('/app', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/about', function () {
-    return view('about');
-});
 Route::get('/about', [TestimonialController::class, 'about']);
 
-
-Route::get('/list', function () {
-    return view('tour-list');
-});
