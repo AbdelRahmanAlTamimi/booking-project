@@ -158,5 +158,28 @@
     <script src="assets/js/plugin.js"></script>
     <!-- Main js-->
     <script src="assets/js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const oneWayInputs = document.querySelectorAll('.one-way-input');
+    const roundTripInputs = document.querySelectorAll('.round-trip-input');
+    const returnDateSections = document.querySelectorAll('#return-date-section');
+
+    function toggleReturnDate() {
+        oneWayInputs.forEach((input, index) => {
+            if (input.checked) {
+                returnDateSections[index].style.display = 'none';
+            } else {
+                returnDateSections[index].style.display = 'block';
+            }
+        });
+    }
+
+    oneWayInputs.forEach(input => input.addEventListener('change', toggleReturnDate));
+    roundTripInputs.forEach(input => input.addEventListener('change', toggleReturnDate));
+
+    // Initial check
+    toggleReturnDate();
+});
+</script>
 </body>
 </html>

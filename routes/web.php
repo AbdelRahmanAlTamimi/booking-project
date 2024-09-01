@@ -5,7 +5,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
-use App\Http\Controllers\FligthsController;
+use App\Http\Controllers\FlightController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +21,9 @@ use App\Http\Controllers\FligthsController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/index', function () {
-    return view('userSide.index');
-})->name('user.index');
+// Route::get('/index', function () {
+//     return view('userSide.index');
+// })->name('user.index');
 
 Route::get('/contact',function() {
     return view('userSide.contact');
@@ -40,7 +40,7 @@ Route::get('/about', [TestimonialController::class, 'about'])->name('user.about'
 
 
 
-Route::get("/flights",[FlightsController::class,'search']);
+
 
 
 // --------------------- sign in & sign up --------------------------
@@ -50,3 +50,16 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 
 Route::get('/signup',[RegisteredUserController::class,'create'])->name('auth.signup');
 Route::post('/signup', [RegisteredUserController::class, 'store']);
+
+
+//--------------------- Flight Routes ---------------------
+Route::get('/flights', [FlightController::class, 'index'])->name('flights.index');
+Route::get('/flights/search', [FlightController::class, 'search'])->name('flights.search');
+Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show');
+
+//--------------------- Booking Routes ---------------------
+Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');

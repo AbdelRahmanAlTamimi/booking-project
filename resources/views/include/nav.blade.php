@@ -13,23 +13,18 @@
                                     <div class="d-flex justify-content-between align-items-center position-relative">
                                         <!-- Logo-->
                                         <div class="logo">
-                                            <a href="{{route("user.index")}}"><img src="assets/images/logo/logo.png" alt="logo" class="changeLogo"></a>
+                                            <a href="{{route("flights.index")}}"><img src="{{asset('assets/images/logo/logo.png')}}" alt="logo" class="changeLogo"></a>
                                         </div>
                                         <ul class="listing d-none d-lg-block" id="navigation">
                                             <li class="single-list">
-                                                <a href="{{route('user.index')}}" class="single">Home
+                                                <a href="{{route('flights.index')}}" class="single">Home
                                                     </a>
                                                 
                                             </li>
                                             <li class="single-list">
                                                 <a href="{{route("user.about")}}" class="single">About</a>
                                             </li>
-                                            <li class="single-list">
-                                                <a href="destination.html" class="single">Destination</a>
-                                            </li>
-                                            <li class="single-list">
-                                                <a href="tour-list.html" class="single">Tour Package</a>
-                                            </li>
+                                            
                                             
                                             <li class="single-list">
                                                 <a href="{{route('user.contact')}}" class="single">Contact</a>
