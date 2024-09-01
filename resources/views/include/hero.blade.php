@@ -59,15 +59,9 @@
 
                                 <!-- Buttons Type Select -->
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    
                                     <li class="nav-item" role="presentation">
-                                        <button class="plan-link active" id="tour-tab" data-bs-toggle="tab"
-                                            data-bs-target="#tour" type="button" role="tab" aria-controls="tour"
-                                            aria-selected="true">
-                                            <i class="ri-ship-line"></i> Tour
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="plan-link" id="book-tab" data-bs-toggle="tab" data-bs-target="#book"
+                                        <button class="plan-link active" id="book-tab" data-bs-toggle="tab" data-bs-target="#book"
                                             type="button" role="tab" aria-controls="book" aria-selected="false">
                                             <i class="ri-flight-takeoff-fill"></i> Book
                                         </button>

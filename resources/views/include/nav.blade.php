@@ -13,16 +13,16 @@
                                     <div class="d-flex justify-content-between align-items-center position-relative">
                                         <!-- Logo-->
                                         <div class="logo">
-                                            <a href="index.html"><img src="assets/images/logo/logo.png" alt="logo" class="changeLogo"></a>
+                                            <a href="{{route("user.index")}}"><img src="assets/images/logo/logo.png" alt="logo" class="changeLogo"></a>
                                         </div>
                                         <ul class="listing d-none d-lg-block" id="navigation">
                                             <li class="single-list">
-                                                <a href="javascript:void(0)" class="single link-active">Home
+                                                <a href="{{route('user.index')}}" class="single">Home
                                                     </a>
                                                 
                                             </li>
                                             <li class="single-list">
-                                                <a href="about.html" class="single">About</a>
+                                                <a href="{{route("user.about")}}" class="single">About</a>
                                             </li>
                                             <li class="single-list">
                                                 <a href="destination.html" class="single">Destination</a>
@@ -32,7 +32,7 @@
                                             </li>
                                             
                                             <li class="single-list">
-                                                <a href="contact.html" class="single">Contact</a>
+                                                <a href="{{route('user.contact')}}" class="single">Contact</a>
                                             </li>
                                             {{-- <li class="d-block d-lg-none">
                                                 <div class="header-right pl-15">
@@ -54,12 +54,15 @@
                                         <!-- Header Right -->
                                         <div class="header-right-three pl-15 d-none d-lg-flex">
                                             <div class="d-flex gap-20 align-items-center">
-                                                <p class="pera">
-                                                    <a href="login.html" class="signin">Sign In</a>
-                                                </p>
-                                                <div class="sign-btn">
-                                                    <a href="register.html" class="btn-secondary-sm radius-30">Sign Up</a>
+                                               @guest
+                                                    <div class="sign-btn">
+                                                    <a href="{{route('auth.signin')}}" class="btn-secondary-sm radius-30">Sign In</a>
                                                 </div>
+                                                <div class="sign-btn">
+                                                    <a href="{{route('auth.signup')}}" class="btn-secondary-sm radius-30">Sign Up</a>
+                                                </div>
+                                               @endguest
+                                               
                                                 <!-- Theme Mode -->
                                                 <button class="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
                                                     <i class="ri-sun-line"></i>

@@ -1,41 +1,52 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\User\LandingPageController;
-use App\Http\Controllers\User\BookController;
-use App\Http\Controllers\User\UserProfileController;
-use App\Http\Controllers\User\AboutUsController;
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ReservationController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\FligthsController;
 
-// Public Pages
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/book', [HomeController::class, 'book'])->name('book');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
-// Authentication Routes (Laravel UI)
-Auth::routes();
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/index', function () {
+    return view('userSide.index');
+})->name('user.index');
 
-// Profile Route for Logged In Users
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
-});
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/contact',function() {
+    return view('userSide.contact');
+})->name('user.contact');
+Route::POST('/messages', [MessageController::class, 'store'])->name('messages.store');
 
-Auth::routes();
+// Route::get('/about',function() {
+//     return view('userSide.about');
+// })->name('user.about');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/about', [TestimonialController::class, 'about'])->name('user.about');
 
-// Admin Routes (with Middleware Protection)
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::resource('reservations', ReservationController::class);
-    Route::resource('users', AdminUserController::class);
-    Route::get('/profile', [UserProfileController::class, 'adminProfile'])->name('admin.profile');
-});
 
+
+
+
+Route::get("/flights",[FlightsController::class,'search']);
+
+
+// --------------------- sign in & sign up --------------------------
+Route::get('/login',[SessionController::class,'create'])->name('auth.signin');
+Route::post('/login', [SessionController::class, 'store']);
+Route::post('/logout', [SessionController::class, 'destroy']);
+
+Route::get('/signup',[RegisteredUserController::class,'create'])->name('auth.signup');
+Route::post('/signup', [RegisteredUserController::class, 'store']);
