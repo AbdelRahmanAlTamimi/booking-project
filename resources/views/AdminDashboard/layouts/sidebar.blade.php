@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " href={{ route('tickets.index') }}>
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -12,21 +12,21 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href={{ route('tickets.index') }}>
                 <i class="bi bi-person"></i>
-                <span>Profile</span>
+                <span>all tickets</span>
             </a>
         </li><!-- End Profile Page Nav -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="adminDashboard.user.index">
+            <a class="nav-link collapsed" href="{{ route('users.index') }}">
                 <i class="bi bi-person"></i>
                 <span>Users</span>
             </a>
-        </li
+        </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
+            <a class="nav-link collapsed" href="{{ route('tickets.create') }}">
                 <i class="bi bi-envelope"></i>
-                <span>Contact</span>
+                <span>create ticket</span>
             </a>
         </li><!-- End Contact Page Nav -->
 
@@ -36,4 +36,4 @@
     </ul>
 
 </aside>
-
+@yield('sidebar')

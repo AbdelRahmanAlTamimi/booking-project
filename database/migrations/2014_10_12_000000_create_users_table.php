@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             // $table->unsignedInteger('user_id')->primary(); 
-<<<<<<< HEAD
-            $table->increments('user_id'); // this well work
-=======
             $table->increments('id'); // this well work
->>>>>>> b1f29b61e112a33233b1c6922089839641fef719
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique()->nullable();
@@ -25,6 +21,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->enum('role', ['user', 'admin'])->default('user'); 
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

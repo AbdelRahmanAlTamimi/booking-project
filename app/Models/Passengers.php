@@ -9,6 +9,7 @@ class Passengers extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'first_name',
         'last_name',
     ];
@@ -16,8 +17,8 @@ class Passengers extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function Tickets()
+    public function tickets()
     {
-        return $this->hasMany(Tickets::class);
+        return $this->hasMany(Tickets::class, 'passenger_id');
     }
 }
