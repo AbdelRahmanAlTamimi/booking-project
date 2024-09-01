@@ -13,12 +13,9 @@ return new class extends Migration
             $table->unsignedInteger('seat_id');
             $table->enum('status', ['booked', 'cancelled', 'pending'])->nullable();
             $table->float('price')->nullable();
-            $table->timestamp('booking_date')->nullable();
-
-            // Define foreign key constraints
+            $table->date('booking_date')->nullable();
             $table->foreign('passenger_id')->references('seat_id')->on('seats')->onDelete('cascade');
             $table->foreign('seat_id')->references('seat_id')->on('seats')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
