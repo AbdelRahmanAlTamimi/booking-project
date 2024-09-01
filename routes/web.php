@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Ticketscontroller;
+
 
 /*
 |--------------------------------------------------------------------------

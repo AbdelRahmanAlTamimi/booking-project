@@ -16,8 +16,8 @@ class AdminDashboardController extends Controller
         $passengersCount = Passengers::count();
         $seatsCount = seats::count();
         // dd($Tickets);
-        return view('AdminDashboard.index', ['ticketCount' => $ticketCount],['passengers'=>$passengersCount],['seatsCount'=>$seatsCount]);
-    
-        
+        return view('AdminDashboard.index', ['ticketCount' => $ticketCount , 'passengers'=>$passengersCount , 'seatsCount'=>$seatsCount]);
+
+
     }
 }

@@ -3,9 +3,9 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
             <img src="{{ asset('assets/img/logo.png') }}" alt="">
-            <span class="d-none d-lg-block">GROUP 4 ADD YOUR NAME HERE</span>
+            <span class="d-none d-lg-block">Travello</span>
         </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
+{{--        <i class="bi bi-list toggle-sidebar-btn"></i>--}}
     </div><!-- End Logo -->
 
     {{-- <div class="search-bar">

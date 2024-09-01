@@ -1231,3 +1231,9 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+.card-icon {
+    width: 75px; /* Adjust the width to fit the larger icon */
+    height: 75px; /* Adjust the height to fit the larger icon */
+    font-size: 72px; /* Make icons three times larger */
+    color: #5b91c1; /* Icon color (optional) */
+}

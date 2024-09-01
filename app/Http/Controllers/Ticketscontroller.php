@@ -15,24 +15,21 @@ class Ticketscontroller extends Controller
      */
     public function index(Request $request)
     {
-        // Define the number of entries per page
-        $perPage = $request->input('per-page', 10); // Default to 10 if not specified
-    
-        // Get the search term from the request
+        $perPage = $request->input('per-page', 5);
+
         $search = $request->input('search');
-    
-        // Query the tickets, applying search and pagination
+
         $tickets = Tickets::when($search, function ($query, $search) {
             return $query->where('passenger_id', 'like', "%{$search}%")
-                         ->orWhere('seat_id', 'like', "%{$search}%")
-                         ->orWhere('status', 'like', "%{$search}%");
+                ->orWhere('seat_id', 'like', "%{$search}%")
+                ->orWhere('status', 'like', "%{$search}%");
         })
-        ->paginate($perPage); // Use paginate instead of get or all
-    
+            ->paginate($perPage); // Use paginate instead of get or all
+
         // Return the view with tickets
         return view('AdminDashboard.tickets.index', compact('tickets'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -83,7 +80,6 @@ class Ticketscontroller extends Controller
     public function edit(string $id)
     {
         $ticket = Tickets::where('ticket_id', $id)->first();
-// dd($ticket);
         if (!$ticket) {
             return view('tickets.index')->with('error', 'Ticket not found.');
         }
@@ -99,7 +95,6 @@ class Ticketscontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validate the request data
         $request->validate([
             'passenger_id' => 'required|exists:passengers,passenger_id', // Ensure this references the correct table and column
             'seat_id' => 'required|exists:seats,seat_id', // Ensure this references the correct table and column
@@ -107,31 +102,25 @@ class Ticketscontroller extends Controller
             'status' => 'required|in:Pending,Cancelled,Booked',
             'booking_date' => 'required|date',
         ]);
-    
-        // Find the ticket by ID
+
         $ticket = Tickets::find($id);
-    
-        // Check if ticket exists
+
         if (!$ticket) {
             return redirect()->route('tickets.index')->with('error', 'Ticket not found.');
         }
-    
-        // Update ticket fields
-        $ticket->passenger_id = $request->input('passenger_id'); // Directly set the passenger_id
-        $ticket->seat_id = $request->input('seat_id');           // Directly set the seat_id
+
+        $ticket->passenger_id = $request->input('passenger_id');
+        $ticket->seat_id = $request->input('seat_id');
         $ticket->price = $request->input('price');
         $ticket->status = $request->input('status');
         $ticket->booking_date = $request->input('booking_date');
-    
-        // Save the updated ticket
+
         $ticket->save();
-    
-        // Retrieve the updated list of tickets with related data
+
         $tickets = Tickets::with(['passenger', 'seat'])->paginate(10);
-    
+
         return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully.');
     }
-    
 
     /**
      * Remove the specified resource from storage.
@@ -149,6 +138,5 @@ class Ticketscontroller extends Controller
         }
 
     }
-    
 
 }
