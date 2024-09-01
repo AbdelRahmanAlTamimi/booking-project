@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Ticketscontroller;
 use App\Http\Controllers\TestimonialController;
 
 /*
@@ -13,23 +15,29 @@ use App\Http\Controllers\TestimonialController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::resource('tickets', Ticketscontroller::class);
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/about', function () {
-//     return view('about');
-// });
-
-Route::get('/app', function () {
-    return view('layouts.app');
-});
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/about', [TestimonialController::class, 'about']);
+//====Admin Dashboard====
 
+Route::get('/adminDashboard', function () {
+   return view('AdminDashboard/index');
+});
+
+//====Admin Dashboard - Layouts====
+Route::get('/AdminDashboard/layouts/head', function () {
+    return view('AdminDashboard/layouts/head');
+});
+
+Route::get('/about', [TestimonialController::class, 'about']);
