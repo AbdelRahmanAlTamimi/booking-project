@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href={{ route('tickets.index') }}>
+            <a class="nav-link " href={{ route('adminDashboard') }}>
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ticketscontroller;
 
@@ -16,9 +17,6 @@ use App\Http\Controllers\Ticketscontroller;
 Route::resource('tickets', Ticketscontroller::class);
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/', function () {
     return view('index');
 });
 
@@ -29,11 +27,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //====Admin Dashboard====
 
-Route::get('/adminDashboard', function () {
-   return view('AdminDashboard/index');
-});
+Route::get('/adminDashboard', [AdminDashboardController::class , 'cardsShow'])->name('adminDashboard');
 
 //====Admin Dashboard - Layouts====
 Route::get('/AdminDashboard/layouts/head', function () {
     return view('AdminDashboard/layouts/head');
 });
+
