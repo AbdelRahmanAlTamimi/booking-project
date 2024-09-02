@@ -1,5 +1,7 @@
 {{-- ========هون كل التوسيع (extend)
 {{-- كوكو --}}
+<!-- {{-- ========هون كل التوسيع (extend) -->
+{{--كوكو--}}
 
 {{-- @extends('AdminDashboard.layouts.head')
 @extends('AdminDashboard.layouts.header')
