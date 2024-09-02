@@ -15,19 +15,35 @@ class Ticketscontroller extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('per-page', 5);
+        $maxPerPage = 20;
 
-        $search = $request->input('search');
+        $totalTickets = \App\Models\Tickets::count();
 
-        $tickets = Tickets::when($search, function ($query, $search) {
-            return $query->where('passenger_id', 'like', "%{$search}%")
-                ->orWhere('seat_id', 'like', "%{$search}%")
-                ->orWhere('status', 'like', "%{$search}%");
-        })
-            ->paginate($perPage); // Use paginate instead of get or all
+        $searchQuery = $request->input('search');
+        $statusFilter = $request->input('status'); 
+        $perPage = min($request->get('per-page', 5), $maxPerPage);
 
-        // Return the view with tickets
-        return view('AdminDashboard.tickets.index', compact('tickets'));
+        $query = \App\Models\Tickets::with(['passenger', 'seat']);
+        if ($statusFilter) {
+            $query->where('status', $statusFilter);
+        }
+
+        if ($searchQuery) {
+            $query->where('ticket_id', 'like', '%' . $searchQuery . '%')
+                ->orWhereHas('passenger', function ($q) use ($searchQuery) {
+                    $q->where('passenger_id', 'like', '%' . $searchQuery . '%');
+                })
+                ->orWhereHas('seat', function ($q) use ($searchQuery) {
+                    $q->where('seat_id', 'like', '%' . $searchQuery . '%');
+                })
+                ->orWhere('price', 'like', '%' . $searchQuery . '%')
+                ->orWhere('status', 'like', '%' . $searchQuery . '%')
+                ->orWhere('booking_date', 'like', '%' . $searchQuery . '%');
+        }
+
+        $tickets = $query->paginate($perPage);
+
+        return view('AdminDashboard.tickets.index', compact('tickets', 'totalTickets', 'searchQuery'));
     }
 
     /**
@@ -43,7 +59,6 @@ class Ticketscontroller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // app/Http/Controllers/TicketController.php
 
     public function store(Request $request)
     {

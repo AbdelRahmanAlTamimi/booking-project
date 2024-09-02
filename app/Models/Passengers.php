@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Passengers extends Model
 {
     use HasFactory;
+    protected $table = 'passengers';
+    protected $keyType = 'string'; // Set to 'string' if the primary key is a string
+    protected $primaryKey = 'passenger_id'; // Set the primary key to 'passenger_id'
+
     protected $fillable = [
-        'id',
+        'user_id',
         'first_name',
         'last_name',
     ];
