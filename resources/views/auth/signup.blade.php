@@ -27,7 +27,7 @@
                         <div class="login-card">
                             <!-- Logo -->
                             <div class="logo mb-40">
-                                <a href="{{route('user.index')}}" class="mb-30 d-block">
+                                <a href="{{route('flights.index')}}" class="mb-30 d-block">
                                     <img src="assets/images/logo/logo.png" alt="logo" class="changeLogo">
                                 </a>
                             </div>

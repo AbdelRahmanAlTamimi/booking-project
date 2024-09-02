@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Seat extends Model
 {
     use HasFactory;
+     protected $fillable = ['seat_number', 'flight_id', 'class', 'is_available'];
 }

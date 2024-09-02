@@ -6,6 +6,11 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SeatController;
+use App\Models\Flight;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +33,10 @@ use App\Http\Controllers\FlightController;
 Route::get('/contact',function() {
     return view('userSide.contact');
 })->name('user.contact');
+
 Route::POST('/messages', [MessageController::class, 'store'])->name('messages.store');
 
-// Route::get('/about',function() {
-//     return view('userSide.about');
-// })->name('user.about');
+
 
 Route::get('/about', [TestimonialController::class, 'about'])->name('user.about');
 
@@ -55,11 +59,14 @@ Route::post('/signup', [RegisteredUserController::class, 'store']);
 //--------------------- Flight Routes ---------------------
 Route::get('/flights', [FlightController::class, 'index'])->name('flights.index');
 Route::get('/flights/search', [FlightController::class, 'search'])->name('flights.search');
-Route::get('/flights/{flight}', [FlightController::class, 'show'])->name('flights.show');
+Route::get('/flights/{id}/prices', [FlightController::class, 'getPrices'])->name('flights.prices');
+
 
 //--------------------- Booking Routes ---------------------
-Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
-Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+Route::get('/booking/{flightId}/{class}', [BookingController::class, 'showBookingForm'])->name('booking.form');
+Route::post('/booking/finalize', [BookingController::class, 'submitBooking'])->name('booking.finalize');
+Route::get('/confirmation',  [BookingController::class, 'showConfirmation'])->name('confirmation');
+
+
+
+

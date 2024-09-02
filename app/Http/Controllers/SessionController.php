@@ -30,12 +30,12 @@ class SessionController extends Controller
         //regenerate the session token
         request()->session()->regenerate();
         //redirect
-        return to_route("user.index");
+        return to_route("flights.index");
     }
 
     public function destroy() {
        Auth::logout();
 
-       return to_route("user.index");
+       return to_route("flights.index");
     }
 }

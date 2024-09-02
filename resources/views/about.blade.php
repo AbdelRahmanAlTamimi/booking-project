@@ -143,8 +143,8 @@
                                     <img src="assets/images/testimonial/testimonial-1.jpeg" alt="travello">
                                 </div>
                                 <div class="user-info">
-                                    <p class="name">{{ $testimonial->user->first_name }}
-                                        {{ $testimonial->user->last_name }}</p>
+                                    <p class="name">{{ $testimonial->name }}
+                                        </p>
                                     <p class="designation">Traveler</p>
                                 </div>
                             </div>
@@ -172,8 +172,8 @@
                                     <img src="assets/images/testimonial/testimonial-1.jpeg" alt="travello">
                                 </div>
                                 <div class="user-info">
-                                    <p class="name">{{ $testimonial->user->first_name }}
-                                        {{ $testimonial->user->last_name }}</p>
+                                    <p class="name">{{ $testimonial->name }}
+                                       </p>
                                     <p class="designation">Traveler</p>
                                 </div>
                             </div>
@@ -197,12 +197,12 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <div class="section-button d-inline-block">
-                        <a href="javascript:void(0)">
+                        {{-- <a href="javascript:void(0)">
                             <div class="btn-primary-icon-sm">
                                 <p class="pera">All Customers Say</p>
                                 <i class="ri-arrow-right-up-line"></i>
                             </div>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

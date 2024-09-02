@@ -10,7 +10,7 @@ class TestimonialController extends Controller
     public function about()
     {
         // Fetch all testimonials including related user data
-        $allTestimonials = Testimonial::with('user')->get();
+        $allTestimonials = Testimonial::all();
 
         // Split the testimonials into two collections
         $totalTestimonials = $allTestimonials->count();

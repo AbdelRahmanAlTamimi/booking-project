@@ -29,22 +29,7 @@
                                             <li class="single-list">
                                                 <a href="{{route('user.contact')}}" class="single">Contact</a>
                                             </li>
-                                            {{-- <li class="d-block d-lg-none">
-                                                <div class="header-right pl-15">
-                                                    <div class="d-flex align-items-center gap-12">
-                                                        <div class="lang search-bar">
-                                                            <i class="ri-search-line"></i>
-                                                        </div>
-                                                        <div class="divider gradient-divider"></div>
-                                                        <div class="money">
-                                                            <p class="pera">USD</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sign-btn">
-                                                        <a href="login.html" class="btn-secondary-sm">Sign In</a>
-                                                    </div>
-                                                </div>
-                                            </li> --}}
+                                           
                                         </ul>
                                         <!-- Header Right -->
                                         <div class="header-right-three pl-15 d-none d-lg-flex">

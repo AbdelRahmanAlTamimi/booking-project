@@ -9,8 +9,16 @@ class Flight extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['flight_number', 'departure_airport_id', 'arrival_airport_id', 'aircraft_id', 'base_price', 'capacity'];
-
+    protected $fillable = [
+    'flight_number',
+    'departure_airport_id',
+    'arrival_airport_id',
+    'aircraft_id',
+    'economy_price',
+    'business_price',
+    'first_class_price',
+    'capacity',
+];
     // A flight belongs to a departure airport
     public function departureAirport()
     {
