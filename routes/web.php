@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Ticketscontroller;
-use App\Http\Controllers\TestimonialController;
-
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\TicketController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +15,14 @@ use App\Http\Controllers\TestimonialController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::resource('tickets', Ticketscontroller::class);
+
+
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
-});
-Route::get('/', function () {
-    return view('index');
 });
 
 Auth::routes();
@@ -29,15 +30,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//====Admin Dashboard====
 
-Route::get('/adminDashboard', function () {
-   return view('AdminDashboard/index');
-});
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
 
-//====Admin Dashboard - Layouts====
-Route::get('/AdminDashboard/layouts/head', function () {
-    return view('AdminDashboard/layouts/head');
-});
 
-Route::get('/about', [TestimonialController::class, 'about']);
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+
+
+Route::resource('tickets', TicketController::class)->middleware('auth');

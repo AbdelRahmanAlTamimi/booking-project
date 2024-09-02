@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name',
-        'last_name',
+    'last_name',
         'email',
         'password',
     ];
@@ -42,8 +42,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function Passengers()
-    {
-        return $this->hasOne(Passengers::class);
-    }
 }
