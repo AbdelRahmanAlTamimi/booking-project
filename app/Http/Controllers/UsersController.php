@@ -30,7 +30,6 @@ public function show(User $user)
         $first_name=request()->first_name;
         $last_name=request()->last_name;
         $email=request()->email;
-        $password=request()->password;
 
         User::create([
         'first_name'=>$first_name,
