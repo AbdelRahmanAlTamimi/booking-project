@@ -10,6 +10,7 @@ class Tickets extends Model
     use HasFactory;
     protected $primaryKey = 'ticket_id';
     protected $keyType = 'string'; 
+    // protected $primaryKey = 'flight_id';
 
     protected $fillable = [
         'passenger_id',
@@ -26,4 +27,10 @@ class Tickets extends Model
     {
         return $this->belongsTo(Passengers::class, 'passenger_id', 'passenger_id');
     }
+
+    public function plane()
+    {
+        return $this->belongsTo(Plane::class, 'plane_id', 'plane_id');
+    }
+    
 }

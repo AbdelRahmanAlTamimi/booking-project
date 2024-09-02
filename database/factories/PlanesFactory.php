@@ -15,9 +15,10 @@ class PlanesFactory extends Factory
     public function definition()
     {
         return [
-            'plane_type_id' => PlaneTypes::factory(),
             'status' => $this->faker->randomElement(['active', 'inactive']),
             'total_seats' => $this->faker->numberBetween(100, 300),
+            'model' => $this->faker->word,
+
         ];
     }
 }

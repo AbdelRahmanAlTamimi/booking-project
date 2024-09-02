@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('planes', function (Blueprint $table) {
             $table->increments('plane_id'); 
-            $table->unsignedInteger('plane_type_id'); 
-            $table->foreign('plane_type_id')->references('plane_type_id')->on('plane_types')->onDelete('cascade'); 
             $table->enum('status', ['active', 'inactive'])->nullable(); 
+            $table->string('model')->nullable(); 
             $table->integer('total_seats')->nullable(); 
             $table->timestamps();
         });
