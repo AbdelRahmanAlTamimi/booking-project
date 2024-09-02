@@ -17,7 +17,7 @@
                             <option value="5" {{ request('per-page') == 5 ? 'selected' : '' }}>5</option>
                             <option value="10" {{ request('per-page') == 10 ? 'selected' : '' }}>10</option>
                             <option value="15" {{ request('per-page') == 15 ? 'selected' : '' }}>15</option>
-                            <option value="9999999999999" {{ request('per-page') == 9999999999999 ? 'selected' : '' }}>All</option>
+                            <option value="900" {{ request('per-page') == 900 ? 'selected' : '' }}>All</option>
                         </select>
                     </div>
                     <div class="input-group w-50">
