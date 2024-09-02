@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ticketscontroller;
+use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\Seatscontroller;
+use App\Http\Controllers\Flightscontroller;
+use App\Http\Controllers\planescontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,10 @@ use App\Http\Controllers\Ticketscontroller;
 |
 */
 Route::resource('tickets', Ticketscontroller::class);
+Route::resource('passengers', PassengerController::class);
+Route::resource('seats', Seatscontroller::class);
+Route::resource('flights', Flightscontroller::class);
+Route::resource('planes', planescontroller::class);
 
 Route::get('/', function () {
     return view('welcome');

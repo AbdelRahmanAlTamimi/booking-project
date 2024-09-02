@@ -2,8 +2,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="">
-            <span class="d-none d-lg-block">GROUP 4 ADD YOUR NAME HERE</span>
+            <img src="{{ asset('assets/images/logo/logo.png') }}" alt="">
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

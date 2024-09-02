@@ -5,35 +5,23 @@
     <div class="col-12">
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title m-0">All Tickets</h5>
+                <h5 class="card-title m-0">All Passengers</h5>
             </div>
 
             <div class="card-body">
-                <form method="GET" action="{{ route('tickets.index') }}" class="d-flex justify-content-between align-items-center mb-3">
+                <!-- Update the action attribute to point to the passengers.index route -->
+                <form method="GET" action="{{ route('passengers.index') }}" class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <label class="form-label me-2 mb-0">Entries per page:</label>
                         <select class="form-select form-select-sm w-auto d-inline-block" name="per-page" onchange="this.form.submit()">
                             <option value="5" {{ request('per-page') == 5 ? 'selected' : '' }}>5</option>
                             <option value="10" {{ request('per-page') == 10 ? 'selected' : '' }}>10</option>
                             <option value="15" {{ request('per-page') == 15 ? 'selected' : '' }}>15</option>
-                            <option value="{{ $totalTickets }}" {{ request('per-page') == $totalTickets ? 'selected' : '' }}>All</option>
-                        </select>
-                    </div>
-                    <div class="ms-3">
-                        <label class="form-label me-2 mb-0">Status:</label>
-                        <select class="form-select form-select-sm w-auto d-inline-block" name="status"
-                            onchange="this.form.submit()">
-                            <option value="" {{ request('status') === '' ? 'selected' : '' }}>All</option>
-                            <option value="booked" {{ request('status') === 'booked' ? 'selected' : '' }}>booked
-                            </option>
-                            <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>cancelled
-                            </option>
-                            <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>pending
-                            </option>
+                            <option value="{{ $totalPassengers }}" {{ request('per-page') == $totalPassengers ? 'selected' : '' }}>All</option>
                         </select>
                     </div>
                     <div class="input-group w-50">
-                        <input class="form-control form-control-sm" type="search" name="search" value="{{ request('search') }}" placeholder="Search..." aria-label="Search">
+                        <input class="form-control form-control-sm" type="search" name="search" value="{{ request('search') }}" placeholder="Search by name..." aria-label="Search">
                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                     </div>
                 </form>
@@ -53,33 +41,29 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Passenger ID</th>
-                                <th>Seat ID</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Booking Date</th>
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tickets as $ticket)
+                            @foreach ($passengers as $passenger)
                                 <tr>
-                                    <td>{{ $ticket->ticket_id }}</td>
-                                    <td>{{ $ticket->passenger->passenger_id ?? 'Not found' }}</td>
-                                    <td>{{ $ticket->seat->seat_id ?? 'Not found' }}</td>
-                                    <td>{{ $ticket->price }}</td>
-                                    <td>{{ $ticket->status }}</td>
-                                    <td>{{ $ticket->booking_date }}</td>
+                                    <td>{{ $passenger->passenger_id }}</td>
+                                    <td>{{ $passenger->user_id }}</td>
+                                    <td>{{ $passenger->first_name }}</td>
+                                    <td>{{ $passenger->last_name }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('tickets.edit', $ticket->ticket_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                            <a href="{{ route('passengers.edit', $passenger->passenger_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
                                                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
                                             </a>
 
-                                            <form id="delete-form-{{ $ticket->ticket_id }}" action="{{ route('tickets.destroy', $ticket->ticket_id) }}" method="POST" class="d-inline">
+                                            <form id="delete-form-{{ $passenger->passenger_id }}" action="{{ route('passengers.destroy', $passenger->passenger_id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $ticket->ticket_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
+                                                <button type="button" onclick="confirmDelete({{ $passenger->passenger_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
                                                     <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
                                                 </button>
                                             </form>
@@ -92,7 +76,7 @@
                 </div>
 
                 <div class="mt-3">
-                    {{ $tickets->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    {{ $passengers->appends(request()->query())->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
@@ -100,7 +84,7 @@
 </main>
 
 <script>
-    function confirmDelete(ticketId) {
+    function confirmDelete(passengerId) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -112,7 +96,7 @@
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('delete-form-' + ticketId).submit();
+                document.getElementById('delete-form-' + passengerId).submit();
             }
         });
     }

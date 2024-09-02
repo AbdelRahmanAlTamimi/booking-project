@@ -21,6 +21,7 @@ class FlightsFactory extends Factory
             'departure_datetime' => $this->faker->dateTimeBetween('+1 days', '+1 weeks'),
             'arrival_datetime' => $this->faker->dateTimeBetween('+1 weeks', '+2 weeks'),
             'duration' => $this->faker->time(),
+            'available_seats' => $this->faker->numberBetween(100, 300),
             'plane_id' => Planes::factory(),
         ];
     }
