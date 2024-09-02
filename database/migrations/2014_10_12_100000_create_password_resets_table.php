@@ -8,6 +8,29 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('password_resets', function (Blueprint $table) {
+            //
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('password_resets', function (Blueprint $table) {
+            //
+        });
+    }
+};
+
+class CreatePasswordResetsTable extends Migration
+{
+    /**
+     * Run the migrations.
      *
      * @return void
      */
