@@ -6,8 +6,8 @@
     <title>Admin Profile</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -19,48 +19,59 @@
             background-color: #fff;
             max-width: 600px;
             width: 100%;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-top: 4px solid #007bff;
         }
-        .profile img {
-            max-width: 100px;
-            border-radius: 50%;
-            display: block;
-            margin: 0 auto 20px;
-        }
+        
         .profile h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
         }
         .profile label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
         }
         .profile input[type="text"],
         .profile input[type="email"],
-        .profile input[type="file"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+        .profile input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 16px;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+        .profile input[type="text"]:focus,
+        .profile input[type="email"]:focus,
+        .profile input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
         .profile button {
             display: block;
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
+            padding: 12px;
+            background-color: #ff5722;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
         }
         .profile button:hover {
-            background-color: #0056b3;
+            background-color: #e64a19;
         }
     </style>
 </head>
@@ -68,8 +79,7 @@
 
 <div class="profile">
     <h2>Admin Profile</h2>
-    <img src="{{ asset('storage/' . $admin->image_path) }}" alt="Admin Image">
-    <form action="{{ route('admin.profile.update', $admin->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.profile.update', $admin->id) }}" method="POST">
         @csrf
         <div>
             <label>Name:</label>
@@ -80,8 +90,12 @@
             <input type="email" name="email" value="{{ $admin->email }}" required>
         </div>
         <div>
-            <label>Image:</label>
-            <input type="file" name="image">
+            <label>Password:</label>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <label>Confirm Password:</label>
+            <input type="password" name="password_confirmation">
         </div>
         <button type="submit">Update Profile</button>
     </form>
