@@ -158,5 +158,62 @@
     <script src="assets/js/plugin.js"></script>
     <!-- Main js-->
     <script src="assets/js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const oneWayInputs = document.querySelectorAll('.one-way-input');
+    const roundTripInputs = document.querySelectorAll('.round-trip-input');
+    const returnDateSections = document.querySelectorAll('#return-date-section');
+
+    function toggleReturnDate() {
+        oneWayInputs.forEach((input, index) => {
+            if (input.checked) {
+                returnDateSections[index].style.display = 'none';
+            } else {
+                returnDateSections[index].style.display = 'block';
+            }
+        });
+    }
+
+    oneWayInputs.forEach(input => input.addEventListener('change', toggleReturnDate));
+    roundTripInputs.forEach(input => input.addEventListener('change', toggleReturnDate));
+
+    // Initial check
+    toggleReturnDate();
+});
+</script>
+
+{{-- <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.show-prices');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const flightId = this.getAttribute('data-flight-id');
+            const priceListDiv = document.getElementById(`price-list-${flightId}`);
+
+            // Check if prices are already loaded
+            if (priceListDiv.innerHTML.trim() !== '') {
+                priceListDiv.style.display = priceListDiv.style.display === 'none' ? 'block' : 'none';
+                return;
+            }
+
+            // Fetch prices from the server
+            fetch(`/flights/${flightId}/prices`)
+                .then(response => response.json())
+                .then(data => {
+                    priceListDiv.innerHTML = `
+                        <ul class="list-group">
+                            <li class="list-group-item">Economy: ${data.economy_price}</li>
+                            <li class="list-group-item">Business: ${data.business_price}</li>
+                            <li class="list-group-item">First Class: ${data.first_class_price}</li>
+                        </ul>
+                    `;
+                    priceListDiv.style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching prices:', error));
+        });
+    });
+});
+</script> --}}
 </body>
 </html>

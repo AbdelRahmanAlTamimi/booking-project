@@ -1,12 +1,20 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Ticketscontroller;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\FlightController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SeatController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PassengerController;
-use App\Http\Controllers\Seatscontroller;
-use App\Http\Controllers\Flightscontroller;
-use App\Http\Controllers\planescontroller;
+use App\Http\Controllers\AircraftController;
+use App\Models\Flight;
+use App\Http\Controllers\TicketController;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,41 +26,66 @@ use App\Http\Controllers\planescontroller;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::resource('tickets', Ticketscontroller::class);
-Route::resource('passengers', PassengerController::class);
-Route::resource('seats', Seatscontroller::class);
-Route::resource('flights', Flightscontroller::class);
-Route::resource('planes', planescontroller::class);
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/', function () {
-    return view('index');
-});
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//====Admin Dashboard====
+
+Route::get('/contact',function() {
+    return view('userSide.contact');
+})->name('user.contact');
+
+Route::POST('/messages', [MessageController::class, 'store'])->name('messages.store');
+
+
+
+Route::get('/about', [TestimonialController::class, 'about'])->name('user.about');
+
+
+
+
+
+
+
+
+// --------------------- sign in & sign up --------------------------
+Route::get('/login',[SessionController::class,'create'])->name('auth.signin');
+Route::post('/login', [SessionController::class, 'store']);
+Route::post('/logout', [SessionController::class, 'destroy']);
+
+Route::get('/signup',[RegisteredUserController::class,'create'])->name('auth.signup');
+Route::post('/signup', [RegisteredUserController::class, 'store']);
+
+
+//--------------------- Flight Routes ---------------------
+Route::get('/home', [FlightController::class, 'main'])->name('index');
+Route::get('/flights/search', [FlightController::class, 'search'])->name('flights.search');
+Route::get('/flights/{id}/prices', [FlightController::class, 'getPrices'])->name('flights.prices');
+
+
+//--------------------- Booking Routes ---------------------
+Route::get('/booking/{flightId}/{class}', [BookingController::class, 'showBookingForm'])->name('booking.form');
+Route::post('/booking/finalize', [BookingController::class, 'submitBooking'])->name('booking.finalize');
+Route::get('/confirmation',  [BookingController::class, 'showConfirmation'])->name('confirmation');
+
+
+//-------------------- Profile Routes --------------------------
+Route::get('/profile',[ProfileController::class,"edit"])->name('profile.edit');
+Route::put('/profile',[ProfileController::class,"update"])->name('profile.update');
+Route::get('/profile/history',[ProfileController::class,"history"])->name('profile.history');
+Route::get('/profile/currentBookings',[ProfileController::class,"currentBookings"])->name('profile.currentBookings');
+
+//---------------- Admin Dashboard ---------------- 
 
 Route::get('/adminDashboard', function () {
    return view('AdminDashboard/index');
 });
 
-//====Admin Dashboard - Layouts====
+//------------ Admin Dashboard - Layouts ------------------
 Route::get('/AdminDashboard/layouts/head', function () {
     return view('AdminDashboard/layouts/head');
 });
-Route::get('/users',[UsersController::class,"index"])->name('users.index');
-Route::get('/users/create',[UsersController::class,"create"])->name('users.create');
-Route::post('/users',[UsersController::class,"store"])->name('users.store');
-Route::get('/users/{user}',[UsersController::class,"show"])->name('users.show');
-Route::get('/users/{user}/edit',[UsersController::class,"edit"])->name('users.edit');
-Route::put('/users/{user}',[UsersController::class,"update"])->name('users.update');
-Route::delete('/users/{user}',[UsersController::class,"destroy"])->name('users.destroy');
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('bookings', bookingcontroller::class);
+Route::resource('passengers', PassengerController::class);
+Route::resource('seats', Seatcontroller::class);
+Route::resource('flights', Flightcontroller::class);
+Route::resource('aircrafts', aircraftcontroller::class);

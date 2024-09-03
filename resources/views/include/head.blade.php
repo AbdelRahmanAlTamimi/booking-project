@@ -35,7 +35,7 @@
     <meta name="csrf-token" content="...">
     <meta name="currency" content="$">
     <!-- Title -->
-    <title>Multipurpose travel and tour booking </title>
+    <title>Multipurpose travel and tour booking</title>
     <link rel="icon" type="image/x-icon" sizes="20x20" href="{{asset('assets/images/icon/favicon.png')}}">
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-5.3.0.min.css')}}">

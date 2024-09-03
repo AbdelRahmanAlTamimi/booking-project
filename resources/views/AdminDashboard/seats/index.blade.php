@@ -56,14 +56,14 @@
                                     <td>{{ $seat->seat_class }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('seats.edit', $seat->seat_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                            <a href="{{ route('seats.edit', $seat->id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
                                                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
                                             </a>
 
-                                            <form id="delete-form-{{ $seat->seat_id }}" action="{{ route('seats.destroy', $seat->seat_id) }}" method="POST" class="d-inline">
+                                            <form id="delete-form-{{ $seat->id }}" action="{{ route('seats.destroy', $seat->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $seat->seat_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
+                                                <button type="button" onclick="confirmDelete({{ $seat->id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
                                                     <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
                                                 </button>
                                             </form>

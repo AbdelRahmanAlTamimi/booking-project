@@ -70,12 +70,12 @@
                                     <td>
                                         <div class="d-flex">
                                             <!-- Edit Button -->
-                                            <a href="{{ route('flights.edit', $flight->flight_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                            <a href="{{ route('flights.edit', $flight->id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
 
                                             <!-- Delete Button -->
-                                            <form id="delete-form-{{ $flight->flight_id }}" action="{{ route('flights.destroy', $flight->flight_id) }}" method="POST" class="d-inline">
+                                            <form id="delete-form-{{ $flight->id }}" action="{{ route('flights.destroy', $flight->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" type="button" onclick="confirmDelete({{ $flight->flight_id }})" class="btn btn-danger btn-sm">

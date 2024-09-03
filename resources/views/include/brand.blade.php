@@ -1,5 +1,5 @@
 <!-- Brand S t a r t -->
-        <section class="why-area">
+        <section class="why-area section-padding2">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">

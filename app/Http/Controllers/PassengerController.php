@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Passengers;
+use App\Models\Passenger;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
@@ -16,13 +16,13 @@ class PassengerController extends Controller
     {
         $maxPerPage = 20;
         
-        $totalPassengers = Passengers::count(); 
+        $totalPassengers = Passenger::count(); 
         
         $searchQuery = $request->input('search'); 
         
         $perPage = min($request->get('per-page', 5), $maxPerPage);
         
-        $query = Passengers::query();
+        $query = Passenger::query();
         
         if ($searchQuery) {
             $query->where('first_name', 'like', '%' . $searchQuery . '%')
@@ -53,7 +53,7 @@ class PassengerController extends Controller
             'last_name' => 'required|string|max:255',
         ]);
 
-        $passenger = new Passengers(); 
+        $passenger = new Passenger(); 
         $passenger->user_id = $validatedData['user_id'];
         $passenger->first_name = $validatedData['first_name'];
         $passenger->last_name = $validatedData['last_name'];
@@ -76,7 +76,7 @@ class PassengerController extends Controller
     public function edit($id)
     {
         // Find the passenger by passenger_id
-        $passenger = Passengers::where('passenger_id', $id)->firstOrFail();
+        $passenger = Passenger::where('passenger_id', $id)->firstOrFail();
         
         $users = User::all();
         
@@ -95,7 +95,7 @@ class PassengerController extends Controller
             'last_name' => 'required|string|max:255',
         ]);
     
-        $passenger = Passengers::where('passenger_id', $id)->firstOrFail();
+        $passenger = Passenger::where('passenger_id', $id)->firstOrFail();
     
         $passenger->user_id = $validatedData['user_id'];
         $passenger->first_name = $validatedData['first_name'];
@@ -112,7 +112,7 @@ class PassengerController extends Controller
      */
     public function destroy($id)
     {
-        $passenger = Passengers::findOrFail($id);
+        $passenger = Passenger::findOrFail($id);
         $passenger->delete();
     
         return redirect()->route('passengers.index')->with('success', 'Passenger deleted successfully.');
