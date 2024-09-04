@@ -12,17 +12,23 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href={{ route('tickets.index') }}>
-                <i class="fa-solid fa-ticket"></i>
-                <span>all Tickets</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
-        <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('users.index') }}">
                 <i class="bi bi-person"></i>
-                <span>Users</span>
+                <span>All Users</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('users.create') }}">
+                <i class="bi bi-person"></i>
+                <span>Create User </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href={{ route('tickets.index') }}>
+                <i class="fa-solid fa-ticket"></i>
+                <span>All Tickets</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('tickets.create') }}">
                 <i class="bi bi-plus-circle"></i>

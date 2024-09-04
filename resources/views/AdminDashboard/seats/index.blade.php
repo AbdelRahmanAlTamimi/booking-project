@@ -20,6 +20,19 @@
                             <option value="{{ $totalSeats }}" {{ request('per-page') == $totalSeats ? 'selected' : '' }}>All</option>
                         </select>
                     </div>
+                    <div class="ms-3">
+                        <label class="form-label me-2 mb-0">seat class:</label>
+                        <select class="form-select form-select-sm w-auto d-inline-block" name="seat_class"
+                            onchange="this.form.submit()">
+                            <option value="" {{ request('seat_class') === '' ? 'selected' : '' }}>All</option>
+                            <option value="Business" {{ request('seat_class') === 'Business' ? 'selected' : '' }}>Business
+                            </option>
+                            <option value="First" {{ request('seat_class') === 'First' ? 'selected' : '' }}>First
+                            </option>
+                            <option value="Economy" {{ request('seat_class') === 'Economy' ? 'selected' : '' }}>Economy
+                            </option>
+                        </select>
+                    </div>
                     <div class="input-group w-50">
                         <input class="form-control form-control-sm" type="search" name="search" value="{{ request('search') }}" placeholder="Search by seat number..." aria-label="Search">
                         <button type="submit" class="btn btn-primary btn-sm">Search</button>

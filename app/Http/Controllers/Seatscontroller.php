@@ -18,6 +18,11 @@ class Seatscontroller extends Controller
         $totalSeats = \App\Models\seats::count();
 
         $query = \App\Models\seats::query();
+        $roleFilter = $request->input('seat_class'); 
+
+        if ($roleFilter) {
+            $query->where('seat_class', $roleFilter);
+        }
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($query) use ($search) {

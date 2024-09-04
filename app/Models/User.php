@@ -45,8 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         
     ];
-    public function Passengers()
+    public function passenger()
     {
-        return $this->hasOne(Passengers::class);
+        return $this->hasOne(Passengers::class, 'user_id', 'id');
     }
 }
