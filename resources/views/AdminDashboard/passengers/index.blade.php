@@ -6,6 +6,8 @@
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Passengers</h5>
+                <a href="{{route('passengers.create')}}" type="button" class="btn btn-primary">Create Passenger</a>
+
             </div>
 
             <div class="card-body">

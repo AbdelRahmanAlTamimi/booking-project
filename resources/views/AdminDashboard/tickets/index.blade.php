@@ -6,6 +6,8 @@
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Tickets</h5>
+                <a href="{{route('tickets.create')}}" type="button" class="btn btn-primary">Create Ticket</a>
+
             </div>
 
             <div class="card-body">
@@ -53,8 +55,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Passenger ID</th>
-                                <th>Seat ID</th>
+                                {{-- <th>Passenger ID</th> --}}
+                                {{-- <th>Seat ID</th> --}}
                                 <th>Price</th>
                                 <th>Status</th>
                                 <th>Booking Date</th>
@@ -65,8 +67,8 @@
                             @foreach ($tickets as $ticket)
                                 <tr>
                                     <td>{{ $ticket->ticket_id }}</td>
-                                    <td>{{ $ticket->passenger->passenger_id ?? 'Not found' }}</td>
-                                    <td>{{ $ticket->seat->seat_id ?? 'Not found' }}</td>
+                                    {{-- <td>{{ $ticket->passenger->passenger_id ?? 'Not found' }}</td> --}}
+                                    {{-- <td>{{ $ticket->seat->seat_id ?? 'Not found' }}</td> --}}
                                     <td>{{ $ticket->price }}</td>
                                     <td>{{ $ticket->status }}</td>
                                     <td>{{ $ticket->booking_date }}</td>

@@ -6,6 +6,8 @@
             <div class="card recent-sales overflow-auto shadow-sm mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title m-0">All Planes</h5>
+                    <a href="{{route('planes.create')}}" type="button" class="btn btn-primary">Create Plane</a>
+
                 </div>
 
                 <div class="card-body">
@@ -61,7 +63,7 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Plane ID</th>
+                                    <th>ID</th>
                                     <th>Model</th>
                                     <th>Total Seats</th>
                                     <th>Status</th>

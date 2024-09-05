@@ -30,12 +30,12 @@ class Ticketscontroller extends Controller
 
         if ($searchQuery) {
             $query->where('ticket_id', 'like', '%' . $searchQuery . '%')
-                ->orWhereHas('passenger', function ($q) use ($searchQuery) {
-                    $q->where('passenger_id', 'like', '%' . $searchQuery . '%');
-                })
-                ->orWhereHas('seat', function ($q) use ($searchQuery) {
-                    $q->where('seat_id', 'like', '%' . $searchQuery . '%');
-                })
+                // ->orWhereHas('passenger', function ($q) use ($searchQuery) {
+                //     $q->where('passenger_id', 'like', '%' . $searchQuery . '%');
+                // })
+                // ->orWhereHas('seat', function ($q) use ($searchQuery) {
+                //     $q->where('seat_id', 'like', '%' . $searchQuery . '%');
+                // })
                 ->orWhere('price', 'like', '%' . $searchQuery . '%')
                 ->orWhere('status', 'like', '%' . $searchQuery . '%')
                 ->orWhere('booking_date', 'like', '%' . $searchQuery . '%');

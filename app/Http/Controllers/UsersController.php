@@ -28,7 +28,8 @@ class UsersController extends Controller
                 $query->where('first_name', 'like', '%' . $searchQuery . '%')
                     ->orWhere('last_name', 'like', '%' . $searchQuery . '%')
                     ->orWhere('email', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('id', 'like', '%' . $searchQuery . '%');
+                    ->orWhere('id', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('role', 'like', '%' . $searchQuery . '%');
             });
         }
 
@@ -67,12 +68,18 @@ class UsersController extends Controller
         return to_route('users.index');
     }
 
-    public function edit(User $user)
-    {
-        // $users=User::all();
-        return view('AdminDashboard/user/edit', ['user' => $user]);
+    // public function edit(User $user)
+    // {
+// In your controller method
+public function edit($id)
+{
+    $user = User::findOrFail($id);
+    $totalUsers = User::count();
+    return view('AdminDashboard.user.edit', compact('user', 'totalUsers')); 
+}
 
-    }
+
+    
 
     public function update($userId)
     {
@@ -80,6 +87,7 @@ class UsersController extends Controller
         $last_name = request()->last_name;
         $email = request()->email;
         $password = request()->password;
+        $role = request()->role;
 
         $singlePostFromDB = User::find($userId);
 
@@ -88,6 +96,7 @@ class UsersController extends Controller
             'last_name' => $last_name,
             'user_id' => $email,
             'password' => $password,
+            'role' => $role,
 
         ]);
         return to_route('users.index', $userId);

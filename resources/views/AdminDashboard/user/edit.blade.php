@@ -8,16 +8,25 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="first_name">first_name:</label>
-            <input type="first_name" name="first_name" class="form-control" value="{{ $user->first_name }}" required>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" class="form-control" value="{{ $user->first_name }}" required>
         </div>
         <div class="form-group">
-            <label for="last_name">last_name:</label>
-            <input type="last_name" name="last_name" class="form-control" value="{{ $user->last_name }}" required>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" class="form-control" value="{{ $user->last_name }}" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+            <input type="email" id="email" name="email" class="form-control" value="{{ $user->email }}" required>
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" class="form-control" required>
+                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                <option value="moderator" {{ $user->role == 'moderator' ? 'selected' : '' }}>Moderator</option>
+                <!-- Add more roles as needed -->
+            </select>
         </div>
         <button type="submit" class="btn btn-success">Update User</button>
     </form>

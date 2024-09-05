@@ -6,6 +6,7 @@
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Users</h5>
+                <a href="{{route('users.create')}}" type="button" class="btn btn-primary">Create User</a>
             </div>
 
             <div class="card-body">
@@ -41,6 +42,7 @@
                     </div>
                 </form>
 
+
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -53,6 +55,7 @@
 
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
+
                         <thead>
                             <tr>
                                 <th>ID</th>

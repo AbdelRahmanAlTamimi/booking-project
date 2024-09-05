@@ -4,8 +4,11 @@
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
             <img src="{{ asset('assets/images/logo/logo.png') }}" alt="">
         </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+          </button>
     </div><!-- End Logo -->
+    
 
     {{-- <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="POST" action="#">
@@ -24,7 +27,7 @@
                 </a>
             </li><!-- End Search Icon-->
 
-            <!-- Messages Dropdown -->
+            {{-- <!-- Messages Dropdown -->
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
@@ -76,7 +79,7 @@
                         <a href="#">Show all messages</a>
                     </li>
                 </ul><!-- End Messages Dropdown Items -->
-            </li><!-- End Messages Nav -->
+            </li><!-- End Messages Nav --> --}}
 
             <!-- Profile Dropdown -->
             <li class="nav-item dropdown pe-3">

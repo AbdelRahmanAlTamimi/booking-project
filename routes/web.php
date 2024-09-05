@@ -8,6 +8,7 @@ use App\Http\Controllers\Seatscontroller;
 use App\Http\Controllers\Flightscontroller;
 use App\Http\Controllers\planescontroller;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 //====Admin Dashboard====
+Route::get('/statstic', [AdminDashboardController::class , 'cardsShow'])->name('statstic');
 
 Route::get('/adminDashboard', function () {
    return view('AdminDashboard/index');
