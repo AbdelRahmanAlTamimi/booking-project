@@ -7,7 +7,6 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Flights</h5>
                 <a href="{{route('flights.create')}}" type="button" class="btn btn-primary">Create Flight</a>
-
             </div>
 
             <div class="card-body">
@@ -42,67 +41,83 @@
                     </div>
                 @endif
 
-                <!-- Flights Table -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>From </th>
-                                <th>To </th>
-                                <th>Departure DateTime</th>
-                                <th>Arrival DateTime</th>
-                                <th>Duration</th>
-                                <th>Available Seats</th>
-                                <th>Plane Model</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($flights as $flight)
+                <!-- Check if there are no flights -->
+                @if ($flights->isEmpty())
+                    <div class="alert alert-info">
+                        <strong>No flights found.</strong> <!-- Message when no flights are found -->
+                    </div>
+                @else
+                    <!-- Flights Table -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ $flight->flight_id }}</td>
-                                    <td>{{ $flight->from_location ?? 'Not found' }}</td>
-                                    <td>{{ $flight->to_location ?? 'Not found' }}</td>
-                                    <td>{{ $flight->departure_datetime ?? 'Not found' }}</td>
-                                    <td>{{ $flight->arrival_datetime ?? 'Not found' }}</td>
-                                    <td>{{ $flight->duration ?? 'Not found' }}</td>
-                                    <td>{{ $flight->available_seats ?? 'Not found' }}</td>
-                                    <td>{{ $flight->plane_id ? $flight->plane->model : 'Not found' }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <!-- Edit Button -->
-                                            <a href="{{ route('flights.edit', $flight->flight_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </a>
-
-                                            <!-- Delete Button -->
-                                            <form id="delete-form-{{ $flight->flight_id }}" action="{{ route('flights.destroy', $flight->flight_id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" type="button" onclick="confirmDelete({{ $flight->flight_id }})" class="btn btn-danger btn-sm">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>From </th>
+                                    <th>To </th>
+                                    <th>Departure DateTime</th>
+                                    <th>Arrival DateTime</th>
+                                    <th>Duration</th>
+                                    <th>Available Seats</th>
+                                    <th>Plane Model</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($flights as $flight)
+                                    <tr>
+                                        <td>{{ $flight->flight_id }}</td>
+                                        <td>{{ $flight->from_location ?? 'Not found' }}</td>
+                                        <td>{{ $flight->to_location ?? 'Not found' }}</td>
+                                        <td>{{ $flight->departure_datetime ?? 'Not found' }}</td>
+                                        <td>{{ $flight->arrival_datetime ?? 'Not found' }}</td>
+                                        <td>{{ $flight->duration ?? 'Not found' }}</td>
+                                        <td>{{ $flight->available_seats ?? 'Not found' }}</td>
+                                        <td>{{ $flight->plane_id ? $flight->plane->model : 'Not found' }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <!-- Edit Button -->
+                                                <a href="{{ route('flights.edit', $flight->flight_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
 
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $flights->appends(request()->query())->links('pagination::bootstrap-4') }}
-                </div>
+                                                <!-- Delete Button -->
+                                                <form id="delete-form-{{ $flight->flight_id }}" action="{{ route('flights.destroy', $flight->flight_id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" type="button" onclick="confirmDelete({{ $flight->flight_id }})" class="btn btn-danger btn-sm">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-3">
+                        {{ $flights->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Delete Confirmation Script -->
 <script>
+        @if(session('success'))
+        Swal.fire({
+            title: 'Success!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    @endif
     function confirmDelete(flightId) {
         Swal.fire({
             title: 'Are you sure?',

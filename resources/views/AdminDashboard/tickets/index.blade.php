@@ -7,7 +7,6 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Tickets</h5>
                 <a href="{{route('tickets.create')}}" type="button" class="btn btn-primary">Create Ticket</a>
-
             </div>
 
             <div class="card-body">
@@ -39,69 +38,81 @@
                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                     </div>
                 </form>
+                
+                @if($tickets->isEmpty())
+                    <div class="alert alert-info">
+                        <strong>No tickets found.</strong> <!-- Message when no tickets are found -->
+                    </div>
+                @else
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Booking Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($tickets as $ticket)
+                                    <tr>
+                                        <td>{{ $ticket->ticket_id }}</td>
+                                        <td>{{ $ticket->price }}</td>
+                                        <td>{{ $ticket->status }}</td>
+                                        <td>{{ $ticket->booking_date }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('tickets.edit', $ticket->ticket_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
+
+                                                <form id="delete-form-{{ $ticket->ticket_id }}" action="{{ route('tickets.destroy', $ticket->ticket_id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" onclick="confirmDelete({{ $ticket->ticket_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
+                                                        <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        {{ $tickets->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 @endif
-
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                {{-- <th>Passenger ID</th> --}}
-                                {{-- <th>Seat ID</th> --}}
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Booking Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tickets as $ticket)
-                                <tr>
-                                    <td>{{ $ticket->ticket_id }}</td>
-                                    {{-- <td>{{ $ticket->passenger->passenger_id ?? 'Not found' }}</td> --}}
-                                    {{-- <td>{{ $ticket->seat->seat_id ?? 'Not found' }}</td> --}}
-                                    <td>{{ $ticket->price }}</td>
-                                    <td>{{ $ticket->status }}</td>
-                                    <td>{{ $ticket->booking_date }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="{{ route('tickets.edit', $ticket->ticket_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
-                                                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
-                                            </a>
-
-                                            <form id="delete-form-{{ $ticket->ticket_id }}" action="{{ route('tickets.destroy', $ticket->ticket_id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $ticket->ticket_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
-                                                    <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="mt-3">
-                    {{ $tickets->appends(request()->query())->links('pagination::bootstrap-4') }}
-                </div>
             </div>
         </div>
     </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
+        @if(session('success'))
+        Swal.fire({
+            title: 'Success!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    @endif
     function confirmDelete(ticketId) {
         Swal.fire({
             title: 'Are you sure?',

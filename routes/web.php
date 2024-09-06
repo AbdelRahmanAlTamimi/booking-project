@@ -38,6 +38,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/users/deleted', [UsersController::class, 'showDeleted'])->name('user.deleted');
+Route::put('/users/{id}/restore', [UsersController::class, 'restore'])->name('user.restore');
+Route::delete('/users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('user.forceDelete');
 
 //====Admin Dashboard====
 Route::get('/statstic', [AdminDashboardController::class , 'cardsShow'])->name('statstic');

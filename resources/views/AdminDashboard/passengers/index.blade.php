@@ -7,11 +7,9 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">All Passengers</h5>
                 <a href="{{route('passengers.create')}}" type="button" class="btn btn-primary">Create Passenger</a>
-
             </div>
 
             <div class="card-body">
-                <!-- Update the action attribute to point to the passengers.index route -->
                 <form method="GET" action="{{ route('passengers.index') }}" class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <label class="form-label me-2 mb-0">Entries per page:</label>
@@ -38,54 +36,72 @@
                     </div>
                 @endif
 
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>User ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($passengers as $passenger)
+                @if ($passengers->isEmpty())
+                    <div class="alert alert-info">
+                        <strong>No passengers found.</strong>
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ $passenger->passenger_id }}</td>
-                                    <td>{{ $passenger->user_id }}</td>
-                                    <td>{{ $passenger->first_name }}</td>
-                                    <td>{{ $passenger->last_name }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="{{ route('passengers.edit', $passenger->passenger_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
-                                                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
-                                            </a>
-
-                                            <form id="delete-form-{{ $passenger->passenger_id }}" action="{{ route('passengers.destroy', $passenger->passenger_id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $passenger->passenger_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
-                                                    <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>User ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($passengers as $passenger)
+                                    <tr>
+                                        <td>{{ $passenger->passenger_id }}</td>
+                                        <td>{{ $passenger->user_id }}</td>
+                                        <td>{{ $passenger->first_name }}</td>
+                                        <td>{{ $passenger->last_name }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('passengers.edit', $passenger->passenger_id) }}"  style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
 
-                <div class="mt-3">
-                    {{ $passengers->appends(request()->query())->links('pagination::bootstrap-4') }}
-                </div>
+                                                <form id="delete-form-{{ $passenger->passenger_id }}" action="{{ route('passengers.destroy', $passenger->passenger_id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" onclick="confirmDelete({{ $passenger->passenger_id }})"  style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
+                                                        <i class="fa-solid fa-trash-can" ></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        {{ $passengers->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
+    // Display SweetAlert for success messages
+    @if(session('success'))
+        Swal.fire({
+            title: 'Success!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    @endif
+
     function confirmDelete(passengerId) {
         Swal.fire({
             title: 'Are you sure?',
@@ -103,5 +119,4 @@
         });
     }
 </script>
-
 {{-- @endsection --}}

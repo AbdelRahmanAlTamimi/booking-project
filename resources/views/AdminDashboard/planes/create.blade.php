@@ -10,7 +10,7 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('planes.store') }}">
                     @csrf
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="plane_type_id" class="form-label">Plane Type</label>
                         <select class="form-select" id="plane_type_id" name="plane_type_id" required>
                             <option value="" disabled selected>Select Plane Type</option>
@@ -19,7 +19,7 @@
                                 <option value="{{ $type->plane_id }}">{{ $type->model }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status">

@@ -38,12 +38,34 @@ class UsersController extends Controller
         return view('AdminDashboard.user.index', compact('users', 'totalUsers', 'searchQuery'));
     }
 
-    public function show(User $user)
+    public function show($id)
     {
+        $deletedUsers = User::onlyTrashed()->paginate(10);
 
-        return view('AdminDashboard/user/show', ['users' => $user]);
-
+        return view('AdminDashboard.user.deleted', compact('deletedUsers'));
     }
+    public function showDeleted()
+{
+    $deletedUsers = User::onlyTrashed()->paginate(10); 
+
+    return view('AdminDashboard.user.deleted', compact('deletedUsers'));
+}
+public function restore($id)
+{
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->restore();
+
+    return redirect()->route('user.deleted')->with('success', 'User restored successfully.');
+}
+
+public function forceDelete($id)
+{
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->forceDelete();
+
+    return redirect()->route('user.deleted')->with('success', 'User deleted permanently.');
+}
+    
     public function create()
     {
 
@@ -58,19 +80,18 @@ class UsersController extends Controller
         $last_name = request()->last_name;
         $email = request()->email;
         $password = request()->password;
+        $role = request()->role;
 
         User::create([
             'first_name' => $first_name,
             'last_name' => $last_name,
             'email' => $email,
             'password' => $password,
+            'role' => $role,
         ]);
-        return to_route('users.index');
+        return to_route('users.index')->with('success', 'User created successfully');
     }
 
-    // public function edit(User $user)
-    // {
-// In your controller method
 public function edit($id)
 {
     $user = User::findOrFail($id);
@@ -99,14 +120,14 @@ public function edit($id)
             'role' => $role,
 
         ]);
-        return to_route('users.index', $userId);
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     public function destroy($userId)
     {
 
         User::where('id', $userId)->delete();
-        return to_route('users.index')->with('deleted sucssfully');
+        return to_route('users.index')->with('success', 'User deleted successfully.');
 
     }
 }

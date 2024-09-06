@@ -21,16 +21,13 @@
                         </select>
                     </div>
                     <div class="ms-3">
-                        <label class="form-label me-2 mb-0">seat class:</label>
+                        <label class="form-label me-2 mb-0">Seat Class:</label>
                         <select class="form-select form-select-sm w-auto d-inline-block" name="seat_class"
                             onchange="this.form.submit()">
                             <option value="" {{ request('seat_class') === '' ? 'selected' : '' }}>All</option>
-                            <option value="Business" {{ request('seat_class') === 'Business' ? 'selected' : '' }}>Business
-                            </option>
-                            <option value="First" {{ request('seat_class') === 'First' ? 'selected' : '' }}>First
-                            </option>
-                            <option value="Economy" {{ request('seat_class') === 'Economy' ? 'selected' : '' }}>Economy
-                            </option>
+                            <option value="Business" {{ request('seat_class') === 'Business' ? 'selected' : '' }}>Business</option>
+                            <option value="First" {{ request('seat_class') === 'First' ? 'selected' : '' }}>First</option>
+                            <option value="Economy" {{ request('seat_class') === 'Economy' ? 'selected' : '' }}>Economy</option>
                         </select>
                     </div>
                     <div class="input-group w-50">
@@ -49,48 +46,54 @@
                     </div>
                 @endif
 
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Flight ID</th> <!-- New Column -->
-                                <th>Seat Number</th>
-                                <th>Seat Class</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($seats as $seat)
+                @if ($seats->isEmpty())
+                    <div class="alert alert-info">
+                        <strong>No seats found.</strong>
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ $seat->seat_id }}</td>
-                                    <td>{{ $seat->flight_id }}</td> <!-- New Column Data -->
-                                    <td>{{ $seat->seat_number }}</td>
-                                    <td>{{ $seat->seat_class }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="{{ route('seats.edit', $seat->seat_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
-                                                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
-                                            </a>
-
-                                            <form id="delete-form-{{ $seat->seat_id }}" action="{{ route('seats.destroy', $seat->seat_id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $seat->seat_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
-                                                    <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Flight ID</th>
+                                    <th>Seat Number</th>
+                                    <th>Seat Class</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($seats as $seat)
+                                    <tr>
+                                        <td>{{ $seat->seat_id }}</td>
+                                        <td>{{ $seat->flight_id }}</td>
+                                        <td>{{ $seat->seat_number }}</td>
+                                        <td>{{ $seat->seat_class }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('seats.edit', $seat->seat_id) }}" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-warning btn-sm me-2">
+                                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+                                                </a>
 
-                <div class="mt-3">
-                    {{ $seats->appends(request()->query())->links('pagination::bootstrap-4') }}
-                </div>
+                                                <form id="delete-form-{{ $seat->seat_id }}" action="{{ route('seats.destroy', $seat->seat_id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" onclick="confirmDelete({{ $seat->seat_id }})" style="width: fit-content; height: fit-content; display: flex; justify-content: center; align-items: center;" class="btn btn-danger btn-sm">
+                                                        <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        {{ $seats->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
