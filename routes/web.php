@@ -34,6 +34,7 @@ Route::get('/contact',function() {
 })->name('user.contact');
 
 Route::POST('/messages', [MessageController::class, 'store'])->name('messages.store');
+Route::POST('/messages', [MessageController::class, 'store'])->name('messages.store');
 
 
 
@@ -63,8 +64,12 @@ Route::get('/flights/{id}/prices', [FlightController::class, 'getPrices'])->name
 
 //--------------------- Booking Routes ---------------------
 Route::get('/booking/{flightId}/{class}', [BookingController::class, 'showBookingForm'])->name('booking.form');
-Route::post('/booking/finalize', [BookingController::class, 'submitBooking'])->name('booking.finalize');
-Route::get('/confirmation',  [BookingController::class, 'showConfirmation'])->name('confirmation');
+Route::post('/booking/preview', [BookingController::class, 'preview'])->name('booking.preview');
+Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
+Route::get('/booking/success', function() {
+    return view('booking.success');
+})->name('booking.success');
+
 
 
 //-------------------- Profile Routes --------------------------
@@ -73,7 +78,7 @@ Route::put('/profile',[ProfileController::class,"update"])->name('profile.update
 Route::get('/profile/history',[ProfileController::class,"history"])->name('profile.history');
 Route::get('/profile/currentBookings',[ProfileController::class,"currentBookings"])->name('profile.currentBookings');
 
-//---------------- Admin Dashboard ---------------- 
+//---------------- Admin Dashboard ----------------
 
 Route::get('/adminDashboard', function () {
    return view('AdminDashboard/index');

@@ -20,34 +20,86 @@ class BookingController extends Controller
                           ->where('class', $class)
                           ->where('is_available', true)
                           ->pluck('seat_number');
+    $randomSeat = $availableSeats->random();
     $flightSchedule = FlightSchedule::find($flightId);
-    // dd($availableSeats);
-    return view('booking.form', compact('flight', 'class','availableSeats','flightSchedule'));
+
+    return view('booking.form', compact('flight', 'class','availableSeats','flightSchedule','randomSeat'));
 }
 
+    public function preview(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|in:Mr,Ms,Mrs',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'dob_day' => 'required|integer|min:1|max:31',
+            'dob_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
+            'dob_year' => 'required|integer|min:1900|max:' . date('Y'),
+            'nationality' => 'required|string', // Add other valid nationalities if needed
+            'document_type' => 'required|string', // Add other valid document types if needed
+            'issuing_country' => 'required|string', // Add other valid issuing countries if needed
+            'document_number' => 'required|string|max:255',
+            'expiry_day' => 'required|integer|min:1|max:31',
+            'expiry_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
+            'expiry_year' => 'required|integer|min:' . date('Y') . '|max:' . (date('Y') + 10),
+            'seat_number' => 'required|string',
+            'class' => 'required|string',
+            'flight_id' => 'required|integer|exists:flights,id', // Assuming flight_id must exist in the flights table
+            'flight_schedule_id' => 'required|integer|exists:flight_schedules,id', // Assuming flight_schedule_id must exist in the flight_schedules table
+            'booking_date' => 'required'
+        ]);
+        $reservationData = $validated;
+
+        return view('booking.preview', compact('reservationData'));
+    }
+
+    public function confirm(Request $request)
+    {
+        $reservationData = $request->all();
+//        dd($reservationData);
+        try {
+            $passengerInfo = [
+                "date_of_birth" => Carbon::createFromDate($reservationData['dob_year'], Carbon::parse($reservationData['dob_month'])->month, $reservationData['dob_day'])->format('Y-m-d'),
+                "passport_number" => $reservationData['document_number'],
+                "full_name" => $reservationData['title']." ".$reservationData['first_name']." ".$reservationData['last_name']
+            ];
+
+            $passenger = Passenger::create($passengerInfo);
+
+            $booking = Booking::create(array_merge($reservationData, ["passenger_id" => $passenger->id]));
+            Seat::where('flight_id', $reservationData['flight_id'])
+                ->where('seat_number', $reservationData['seat_number'])
+                ->update(['is_available' => false]);
+
+            return redirect()->route('booking.success');
+        } catch (Exception $e) {
+            Log::error('Booking confirmation failed: ' . $e->getMessage());
+            return back()->withInput()->withErrors(['error' => 'Unable to confirm booking. Please try again.']);
+        }
+    }
     public function submitBooking(Request $request)
 {
     // dd($request->booking_date);
-    $validated = $request->validate([
-    'title' => 'required|string|in:Mr,Ms,Mrs',
-    'first_name' => 'required|string|max:255',
-    'last_name' => 'required|string|max:255',
-    'dob_day' => 'required|integer|min:1|max:31',
-    'dob_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
-    'dob_year' => 'required|integer|min:1900|max:' . date('Y'),
-    'nationality' => 'required|string', // Add other valid nationalities if needed
-    'document_type' => 'required|string', // Add other valid document types if needed
-    'issuing_country' => 'required|string', // Add other valid issuing countries if needed
-    'document_number' => 'required|string|max:255',
-    'expiry_day' => 'required|integer|min:1|max:31',
-    'expiry_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
-    'expiry_year' => 'required|integer|min:' . date('Y') . '|max:' . (date('Y') + 10),
-    'seat_number' => 'required|string',
-    'class' => 'required|string', 
-    'flight_id' => 'required|integer|exists:flights,id', // Assuming flight_id must exist in the flights table
-    'flight_schedule_id' => 'required|integer|exists:flight_schedules,id', // Assuming flight_schedule_id must exist in the flight_schedules table
-    'booking_date' => 'required'
-]);
+//    $validated = $request->validate([
+//    'title' => 'required|string|in:Mr,Ms,Mrs',
+//    'first_name' => 'required|string|max:255',
+//    'last_name' => 'required|string|max:255',
+//    'dob_day' => 'required|integer|min:1|max:31',
+//    'dob_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
+//    'dob_year' => 'required|integer|min:1900|max:' . date('Y'),
+//    'nationality' => 'required|string', // Add other valid nationalities if needed
+//    'document_type' => 'required|string', // Add other valid document types if needed
+//    'issuing_country' => 'required|string', // Add other valid issuing countries if needed
+//    'document_number' => 'required|string|max:255',
+//    'expiry_day' => 'required|integer|min:1|max:31',
+//    'expiry_month' => 'required|string|in:January,February,March,April,May,June,July,August,September,October,November,December',
+//    'expiry_year' => 'required|integer|min:' . date('Y') . '|max:' . (date('Y') + 10),
+//    'seat_number' => 'required|string',
+//    'class' => 'required|string',
+//    'flight_id' => 'required|integer|exists:flights,id', // Assuming flight_id must exist in the flights table
+//    'flight_schedule_id' => 'required|integer|exists:flight_schedules,id', // Assuming flight_schedule_id must exist in the flight_schedules table
+//    'booking_date' => 'required'
+//]);
     // dd($request->dob_day);
 
      try {
@@ -61,8 +113,11 @@ class BookingController extends Controller
         ];
 
         $passenger = Passenger::create($passengerInfo);
-        
+
         $booking = Booking::create(array_merge($validated, ["passenger_id" => $passenger->id]));
+         Seat::where('flight_id', $validated['flight_id'])
+             ->where('seat_number', $validated['seat_number'])
+             ->update(['is_available' => false]);
 
         $request->session()->put('booking_id', $booking->id);
 
@@ -77,13 +132,20 @@ public function showConfirmation(Request $request)
     {
     // Retrieve the booking ID from the session or request
     $bookingId = $request->session()->get('booking_id');
-        // dd($bookingId);
+
+        if (!$bookingId) {
+            return redirect()->route('booking.form')->withErrors('No booking found in session.');
+        }
     // Fetch the booking details from the database
     $booking = Booking::with(['flight', 'passenger'])->findOrFail($bookingId);
 
     // Pass the booking details to the view
     return view('booking.confirmation', compact('booking'));
     }
+
+
+
+
 
      public function index(Request $request)
     {
@@ -92,7 +154,7 @@ public function showConfirmation(Request $request)
         $totalTickets = \App\Models\Booking::count();
 
         $searchQuery = $request->input('search');
-        $statusFilter = $request->input('status'); 
+        $statusFilter = $request->input('status');
         $perPage = min($request->get('per-page', 5), $maxPerPage);
 
         $query = \App\Models\Booking::with(['passenger', 'seat']);

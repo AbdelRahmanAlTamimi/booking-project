@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-5">
     <h2 class="mb-4">Passenger(s) and Document Details</h2>
-    <form action="{{route('booking.finalize')}}" method="post">
+    <form action="{{route('booking.preview')}}" method="post">
         @csrf
         <div class="card mb-4">
             <div class="card-header">
@@ -90,35 +90,26 @@
                                 @endforeach
                             </select>
                             <select class="form-select" id="expiry_year" name="expiry_year" required>
-                                @for($i = date('Y'); $i <= date('Y') + 10; $i++)
+                                @for($i = date('Y'); $i <= 10 + date('Y'); $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
         </div>
-        <div class="card-body">
-                <!-- Existing form fields -->
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="seat_number" class="form-label">Seat Number*</label>
-                        <select class="form-select" id="seat_number" name="seat_number" required>
-                            @foreach($availableSeats as $seat)
-                                <option value="{{ $seat }}">{{ $seat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
         <input type="hidden" name="booking_date" value="{{\Carbon\Carbon::now()}}">
         <input type="hidden" name="class" value="{{ $class }}">
         <input type="hidden" name="flight_id" value="{{ $flight->id }}">
         <input type="hidden" name="flight_schedule_id" value="{{ $flightSchedule->id }}">
+        <input type="hidden" name="seat_number" value="{{ $randomSeat }}">
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

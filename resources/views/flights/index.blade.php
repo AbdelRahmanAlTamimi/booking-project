@@ -28,11 +28,11 @@
                                             <span class="circle"></span>
                                             <span class="radio-text">One Way</span>
                                         </label>
-                                        <label class="round-trip-label">
-                                            <input class="round-trip-input" type="radio" name="trip_type" value="round_trip">
-                                            <span class="circle"></span>
-                                            <span class="radio-text">Round Trip</span>
-                                        </label>
+{{--                                        <label class="round-trip-label">--}}
+{{--                                            <input class="round-trip-input" type="radio" name="trip_type" value="round_trip">--}}
+{{--                                            <span class="circle"></span>--}}
+{{--                                            <span class="radio-text">Round Trip</span>--}}
+{{--                                        </label>--}}
                                     </div>
                                     <div class="row g-4 justify-content-end">
                                         <div class="col-xl-5 col-lg-12">
