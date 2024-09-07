@@ -187,10 +187,10 @@
                         new Chart(document.querySelector('#tickets_status_chart'), {
                             type: 'pie',
                             data: {
-                                labels: ['pending', 'cancelled','booked'],
+                                labels: ['reservationsToday', 'reservationsThisMonth','reservationsThisYear'],
                                 datasets: [{
                                     label: 'Current',
-                                    data: [{{ $pendingcount }}, {{ $cancelledcount }},{{$bookedcount}}],
+                                    data: [{{ $reservationsToday }}, {{ $reservationsThisMonth }},{{$reservationsThisYear}}],
                                     backgroundColor: [
                                         '#CCCCFF ', 
                                         '#C1E1C1     ',  

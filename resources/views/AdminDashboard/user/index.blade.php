@@ -1,7 +1,6 @@
 @extends('AdminDashboard.index')
 
 @section('content')
-    <main id="main" class="main">
         <div class="col-12">
             <div class="card recent-sales overflow-auto shadow-sm mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -22,11 +21,10 @@
                         </div>
                         <div class="ms-3">
                             <label class="form-label me-2 mb-0">Status:</label>
-                            <select class="form-select form-select-sm w-auto d-inline-block" name="status" onchange="this.form.submit()">
-                                <option value="" {{ request('status') === '' ? 'selected' : '' }}>All</option>
-                                <option value="booked" {{ request('status') === 'booked' ? 'selected' : '' }}>Booked</option>
-                                <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                            <select class="form-select form-select-sm w-auto d-inline-block" name="role" onchange="this.form.submit()">
+                                <option value="" {{ request('role') === '' ? 'selected' : '' }}>All</option>
+                                <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>admin</option>
+                                <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>user</option>
                             </select>
                         </div>
                         <div class="input-group w-50">
@@ -112,7 +110,6 @@
                 </div>
             </div>
         </div>
-    </main>
 
     <script>
         function confirmDelete(event, userId) {
@@ -134,4 +131,4 @@
             });
         }
     </script>
-{{-- @endsection --}}
+@endsection

@@ -1,7 +1,6 @@
 @extends('AdminDashboard.index')
 
 @section('content')
-<main id="main" class="main">
     <div class="col-12">
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -97,7 +96,6 @@
                         </table>
                     </div>
 
-                    <!-- Pagination -->
                     <div class="mt-3">
                         {{ $flights->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
@@ -105,10 +103,8 @@
             </div>
         </div>
     </div>
-</main>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Delete Confirmation Script -->
 <script>
         @if(session('success'))
         Swal.fire({
@@ -135,4 +131,4 @@
         });
     }
 </script>
-{{-- @endsection --}}
+@endsection

@@ -1,7 +1,6 @@
 @extends('AdminDashboard.index')
 
 @section('content')
-<main id="main" class="main">
     <div class="col-12">
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -46,7 +45,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>User ID</th>
+                                    {{-- <th>User ID</th> --}}
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Action</th>
@@ -56,7 +55,7 @@
                                 @foreach ($passengers as $passenger)
                                     <tr>
                                         <td>{{ $passenger->passenger_id }}</td>
-                                        <td>{{ $passenger->user_id }}</td>
+                                        {{-- <td>{{ $passenger->user_id }}</td> --}}
                                         <td>{{ $passenger->first_name }}</td>
                                         <td>{{ $passenger->last_name }}</td>
                                         <td>
@@ -87,7 +86,6 @@
             </div>
         </div>
     </div>
-</main>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -119,4 +117,4 @@
         });
     }
 </script>
-{{-- @endsection --}}
+@endsection

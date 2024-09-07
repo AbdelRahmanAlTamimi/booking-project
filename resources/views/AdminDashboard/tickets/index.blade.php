@@ -1,7 +1,6 @@
 @extends('AdminDashboard.index')
 
 @section('content')
-<main id="main" class="main">
     <div class="col-12">
         <div class="card recent-sales overflow-auto shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -100,7 +99,6 @@
             </div>
         </div>
     </div>
-</main>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -131,4 +129,4 @@
     }
 </script>
 
-{{-- @endsection --}}
+@endsection
